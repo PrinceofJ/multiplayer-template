@@ -28,12 +28,13 @@ func _ready():
 
 	# TODO make this work
 
-	if SteamManager.has_signal("player_left_lobby"):
-		SteamManager.player_left_lobby.connect(Callable(self, "_on_player_left_lobby"))
-	if SteamManager.has_signal("lobby_metadata_updated"):
-		SteamManager.lobby_metadata_updated.connect(Callable(self, "_on_lobby_metadata_updated"))
-	if SteamManager.has_signal("local_player_kicked_from_lobby"):
-		SteamManager.local_player_kicked_from_lobby.connect(Callable(self, "_on_local_player_kicked"))
+	#if SteamManager.has_signal("player_left_lobby"):
+	#	SteamManager.player_left_lobby.connect(Callable(self, "_on_player_left_lobby"))
+
+	Steam.connect("lobby_data_update", self._on_lobby_metadata_updated)
+
+	#if SteamManager.has_signal("local_player_kicked_from_lobby"):
+	#	SteamManager.local_player_kicked_from_lobby.connect(Callable(self, "_on_local_player_kicked"))
 
 	if ready_button:
 		ready_button.pressed.connect(Callable(self, "_on_ready_button_pressed"))
