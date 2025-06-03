@@ -174,13 +174,13 @@ func _on_lobby_metadata_updated(a: int, b: int, c: bool):
 
 func check_for_new_players():
 	var num_members = Steam.getNumLobbyMembers(SteamManager.current_lobby_id)
-	
+
 	var currentPlayerCount = 0
-	
+
 	for p in players_in_lobby.keys():
 		if(players_in_lobby[p] != null):
 			currentPlayerCount += 1
-	
+
 	if(num_members > currentPlayerCount):
 		print("Updating New Players")
 		for i in range(num_members):
@@ -189,9 +189,9 @@ func check_for_new_players():
 				var member_name = Steam.getFriendPersonaName(member_id)
 				add_player_to_lobby_data(member_id, member_name)
 			assign_slots_and_refresh_data()
-	
-	
-	
+
+
+
 
 func _on_local_player_kicked():
 	print("LobbyScene: Local player was kicked!")
@@ -244,10 +244,11 @@ func _initiate_game_transition():
 	leave_lobby_button.disabled = true
 
 	get_tree().change_scene("res://scenes/GameScene.tscn")
+
 func _on_leave_lobby_button_pressed():
 	if SteamManager.current_lobby_id != null and SteamManager.current_lobby_id != 0:
 		Steam.leaveLobby(SteamManager.current_lobby_id)
-
+		Steam.setLobbyData(SteamManager.current_lobby_id, "Players", "")
 	players_in_lobby.clear()
 	player_slots = [null, null]
 	SteamManager.current_lobby_id = null
