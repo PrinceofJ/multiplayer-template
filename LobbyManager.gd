@@ -162,7 +162,7 @@ func _on_player_left_lobby(player_steam_id):
 	remove_player_from_lobby_data(player_steam_id)
 	assign_slots_and_refresh_data()
 
-func _on_lobby_metadata_updated():
+func _on_lobby_metadata_updated(a: int, b: int, c: bool):
 	print("LobbyScene: Lobby metadata updated event.")
 
 	assign_slots_and_refresh_data()
@@ -186,7 +186,7 @@ func _on_ready_button_pressed():
 
 	var ready_str: String = "true" if local_player_ready_state else "false"
 	Steam.setLobbyMemberData(SteamManager.current_lobby_id, "ready", ready_str)
-	_on_lobby_metadata_updated()
+	#_on_lobby_metadata_updated(SteamManager.current_lobby_id, -1, true)
 
 func _on_start_game_button_pressed():
 	if not is_host: return
