@@ -26,7 +26,6 @@ func _ready():
 	local_player_steam_id = Steam.getSteamID()
 	is_host = (Steam.getLobbyOwner(SteamManager.current_lobby_id) == local_player_steam_id)
 
-	Steam.connect("", SteamManager.player_joined_lobby)
 	# TODO make this work
 
 	if SteamManager.has_signal("player_left_lobby"):
