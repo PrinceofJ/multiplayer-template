@@ -26,8 +26,9 @@ func _ready():
 	local_player_steam_id = Steam.getSteamID()
 	is_host = (Steam.getLobbyOwner(SteamManager.current_lobby_id) == local_player_steam_id)
 
-	if SteamManager.has_signal("player_joined_lobby"):
-		SteamManager.player_joined_lobby.connect(Callable(self, "_on_player_joined_lobby"))
+	Steam.connect("", SteamManager.player_joined_lobby)
+	# TODO make this work
+
 	if SteamManager.has_signal("player_left_lobby"):
 		SteamManager.player_left_lobby.connect(Callable(self, "_on_player_left_lobby"))
 	if SteamManager.has_signal("lobby_metadata_updated"):

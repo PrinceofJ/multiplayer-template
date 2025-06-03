@@ -9,6 +9,7 @@ func _ready():
 		print("Steam Initialized successfully! App ID: " + str(Steam.getAppID()))
 		Steam.connect("lobby_created", self._on_steam_lobby_created_callback)
 		Steam.connect("join_requested", self._on_game_lobby_join_requested_callback)
+		Steam.connect("lobby_joined", self._on_lobby_entered_callback)
 	else:
 		printerr("Failed to initialize Steam.")
 
@@ -52,6 +53,7 @@ func join_steam_lobby_by_id(lobby_id_to_join):
 func _on_game_lobby_join_requested_callback(lobby_id_from_invite, friend_steam_id):
 	print("SteamManager: Received game_lobby_join_requested. Lobby ID: " + str(lobby_id_from_invite) + ", Friend ID: " + str(friend_steam_id))
 	Steam.joinLobby(int(lobby_id_from_invite))
+
 
 func _on_lobby_entered_callback(lobby_id, permissions, locked, response_code):
 	print("SteamManager: Received lobby_entered callback. Lobby ID: " + str(lobby_id) + ", Response Code: " + str(response_code))
