@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://beldci8uw0sol"]
+
+[ext_resource type="Script" uid="uid://d2kkvk0dvlrwc" path="res://MultiplayerMenu.gd" id="1_uubjt"]
+
+[node name="MenuScene" type="Control" node_paths=PackedStringArray("create_lobby_button", "join_button", "lobby_id_input")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_uubjt")
+create_lobby_button = NodePath("CreateLobbyButton")
+join_button = NodePath("JoinButton")
+lobby_id_input = NodePath("LobbyIDInput")
+
+[node name="CreateLobbyButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 26.0
+offset_right = 203.0
+offset_bottom = 70.0
+text = "CREATE LOBBY"
+
+[node name="LobbyIDInput" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 134.0
+offset_right = 256.0
+offset_bottom = 167.0
+
+[node name="JoinButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 174.0
+offset_right = 203.0
+offset_bottom = 214.0
+text = "JOIN BY ID"
