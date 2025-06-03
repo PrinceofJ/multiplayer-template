@@ -41,13 +41,13 @@ func join_steam_lobby_by_id(lobby_id_to_join):
 		emit_signal("steam_lobby_joined", Steam.RESULT_FAIL, 0) # Or a specific error code
 		return
 
-	if lobby_id_to_join == null or lobby_id_to_join == 0:
+	if lobby_id_to_join == null or lobby_id_to_join == "0":
 		printerr("SteamManager: Invalid lobby_id_to_join provided: " + str(lobby_id_to_join))
 		emit_signal("steam_lobby_joined", Steam.RESULT_FAIL, 0)
 		return
 
 	print("SteamManager: Requesting to join Steam lobby by ID: " + str(lobby_id_to_join))
-	Steam.joinLobby(lobby_id_to_join)
+	Steam.joinLobby(int(lobby_id_to_join))
 
 func _on_game_lobby_join_requested_callback(lobby_id_from_invite, friend_steam_id):
 	print("SteamManager: Received game_lobby_join_requested. Lobby ID: " + str(lobby_id_from_invite) + ", Friend ID: " + str(friend_steam_id))

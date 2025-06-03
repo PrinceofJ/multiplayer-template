@@ -7,9 +7,7 @@ extends Control
 
 func _ready():
 	create_lobby_button.pressed.connect(_on_create_lobby_button_pressed)
-
-	# Connect to SteamManager's signal to handle lobby creation results
-	# This connection stays active as long as the MainMenuScene is active
+	join_button.pressed.connect(_on_join_by_id_button_pressed)
 	var on_lobby_created_callable = Callable(self, "_on_steam_lobby_creation_result")
 	if not SteamManager.is_connected("steam_lobby_created", on_lobby_created_callable):
 		SteamManager.steam_lobby_created.connect(on_lobby_created_callable)
@@ -51,12 +49,12 @@ func _on_join_by_id_button_pressed():
 		return
 
 	var id_string = lobby_id_input.text.strip_edges()
-	if id_string.empty():
+	if id_string == "":
 		print("Lobby ID input is empty.")
 		return
 
 
-	if not id_string.is_valid_integer():
+	if not id_string.is_valid_int():
 		print("Invalid Lobby ID format: " + id_string)
 		return
 
