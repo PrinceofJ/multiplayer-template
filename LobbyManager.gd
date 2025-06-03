@@ -165,14 +165,14 @@ func _on_player_left_lobby(player_steam_id):
 func _on_lobby_metadata_updated(a: int, b: int, c: bool):
 	print("LobbyScene: Lobby metadata updated event.")
 
-	check_for_new_players()
+	check_for_players()
 	assign_slots_and_refresh_data()
 
 	var game_starting_flag = Steam.getLobbyData(SteamManager.current_lobby_id, "game_starting")
 	if game_starting_flag == "true":
 		_initiate_game_transition()
 
-func check_for_new_players():
+func check_for_players():
 	var num_members = Steam.getNumLobbyMembers(SteamManager.current_lobby_id)
 
 	var currentPlayerCount = 0
@@ -181,7 +181,7 @@ func check_for_new_players():
 		if(players_in_lobby[p] != null):
 			currentPlayerCount += 1
 
-	if(num_members > currentPlayerCount):
+	if num_members > currentPlayerCount:
 		print("Updating New Players")
 		for i in range(num_members):
 			var member_id = Steam.getLobbyMemberByIndex(SteamManager.current_lobby_id, i)
@@ -189,6 +189,14 @@ func check_for_new_players():
 				var member_name = Steam.getFriendPersonaName(member_id)
 				add_player_to_lobby_data(member_id, member_name)
 			assign_slots_and_refresh_data()
+	
+	if num_members < currentPlayerCount:
+		print("Updating Missing Players")
+		for i in range(currentPlayerCount):
+			if players_in_lobby.keys()[i] != local_player_steam_id:
+				print("Removing Player " + players_in_lobby.keys()[i])
+				players_in_lobby[players_in_lobby.keys()[i]] = null;
+		assign_slots_and_refresh_data()
 
 
 
