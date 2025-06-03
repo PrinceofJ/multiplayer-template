@@ -189,7 +189,7 @@ func check_for_players():
 				var member_name = Steam.getFriendPersonaName(member_id)
 				add_player_to_lobby_data(member_id, member_name)
 			assign_slots_and_refresh_data()
-	
+
 	if num_members < currentPlayerCount:
 		print("Updating Missing Players")
 		for i in range(currentPlayerCount):
@@ -251,7 +251,7 @@ func _initiate_game_transition():
 	start_game_button.disabled = true
 	leave_lobby_button.disabled = true
 
-	get_tree().change_scene("res://scenes/GameScene.tscn")
+	get_tree().change_scene("res://GameScene.tscn")
 
 func _on_leave_lobby_button_pressed():
 	if SteamManager.current_lobby_id != null and SteamManager.current_lobby_id != 0:
