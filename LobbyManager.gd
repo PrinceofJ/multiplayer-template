@@ -12,21 +12,20 @@ extends Control
 
 var local_player_steam_id = null
 var is_host = false
-var players_in_lobby = {} # Dictionary: { steam_id: {name: "Name", ready: false, slot: 1 or 2} }
-var player_slots = [null, null] # [P1_SteamID, P2_SteamID]
+var players_in_lobby = {}
+var player_slots = [null, null]
 
 var local_player_ready_state = false
 
 func _ready():
 	if SteamManager.current_lobby_id == null or SteamManager.current_lobby_id == 0:
 		printerr("LobbyScene: No valid lobby ID found. Returning to main menu.")
-		get_tree().change_scene_to_file("res://Menu.tscn") # Adjust path
+		get_tree().change_scene_to_file("res://Menu.tscn")
 		return
 
-	local_player_steam_id = Steam.getSteamID() # Get local player's Steam ID
+	local_player_steam_id = Steam.getSteamID()
 	is_host = (Steam.getLobbyOwner(SteamManager.current_lobby_id) == local_player_steam_id)
 
-	# Connect to signals from SteamManager
 	if SteamManager.has_signal("player_joined_lobby"):
 		SteamManager.player_joined_lobby.connect(Callable(self, "_on_player_joined_lobby"))
 	if SteamManager.has_signal("player_left_lobby"):
@@ -35,19 +34,16 @@ func _ready():
 		SteamManager.lobby_metadata_updated.connect(Callable(self, "_on_lobby_metadata_updated"))
 	if SteamManager.has_signal("local_player_kicked_from_lobby"):
 		SteamManager.local_player_kicked_from_lobby.connect(Callable(self, "_on_local_player_kicked"))
-	# if SteamManager.has_signal("game_start_initiated"): # Ensure this signal exists in SteamManager if you uncomment
-	#	SteamManager.game_start_initiated.connect(Callable(self, "_on_game_start_initiated"))
 
-	# Connect UI element signals
-	if ready_button: # Good practice to check if the node exists
+	if ready_button:
 		ready_button.pressed.connect(Callable(self, "_on_ready_button_pressed"))
 	if leave_lobby_button:
 		leave_lobby_button.pressed.connect(Callable(self, "_on_leave_lobby_button_pressed"))
 
 	if start_game_button:
 		start_game_button.pressed.connect(Callable(self, "_on_start_game_button_pressed"))
-		start_game_button.visible = is_host # Only host sees start button
-		start_game_button.disabled = true # Disabled until conditions are met
+		start_game_button.visible = is_host
+		start_game_button.disabled = true
 
 	print("LobbyScene: Joined/Created Lobby ID: " + str(SteamManager.current_lobby_id))
 	print("LobbyScene: Local player Steam ID: " + str(local_player_steam_id))
@@ -78,17 +74,15 @@ func remove_player_from_lobby_data(steam_id):
 	if players_in_lobby.has(steam_id):
 		var player_data = players_in_lobby[steam_id]
 		if player_data.slot != -1:
-			player_slots[player_data.slot -1] = null # Clear slot
+			player_slots[player_data.slot -1] = null
 		players_in_lobby.erase(steam_id)
 		print("LobbyScene: Removed player from data: " + str(steam_id))
 
 
 func assign_slots_and_refresh_data():
-	# Simple slot assignment: host is P1, first joiner is P2
 	var current_members = players_in_lobby.keys()
 	var assigned_count = 0
 
-	# Prioritize host as P1
 	var lobby_owner_id = Steam.getLobbyOwner(SteamManager.current_lobby_id)
 	if lobby_owner_id in current_members and assigned_count < 2 and (player_slots[0] == null or player_slots[0] == lobby_owner_id) :
 		player_slots[0] = lobby_owner_id
@@ -98,17 +92,16 @@ func assign_slots_and_refresh_data():
 	# Assign other players
 	for member_id in current_members:
 		if assigned_count >= 2: break
-		if member_id != lobby_owner_id: # If not the host already assigned
-			if player_slots[0] == null: # P1 slot is free
+		if member_id != lobby_owner_id:
+			if player_slots[0] == null:
 				player_slots[0] = member_id
 				players_in_lobby[member_id].slot = 1
 				assigned_count +=1
-			elif player_slots[1] == null: # P2 slot is free
+			elif player_slots[1] == null:
 				player_slots[1] = member_id
 				players_in_lobby[member_id].slot = 2
 				assigned_count +=1
 
-	# Fetch readiness (if stored in lobby member data)
 	for member_id in current_members:
 		if players_in_lobby.has(member_id):
 			var ready_status_str = Steam.getLobbyMemberData(SteamManager.current_lobby_id, member_id, "ready")
@@ -122,7 +115,6 @@ func assign_slots_and_refresh_data():
 func update_ui_display():
 	lobby_title_label.text = "Lobby ID: " + str(SteamManager.current_lobby_id)
 
-	# Player 1 Slot
 	if player_slots[0] != null and players_in_lobby.has(player_slots[0]):
 		var p1_data = players_in_lobby[player_slots[0]]
 		p1_name_label.text = "Player 1: " + p1_data.name
@@ -131,7 +123,6 @@ func update_ui_display():
 		p1_name_label.text = "Player 1: Waiting..."
 		p1_ready_label.text = ""
 
-	# Player 2 Slot
 	if player_slots[1] != null and players_in_lobby.has(player_slots[1]):
 		var p2_data = players_in_lobby[player_slots[1]]
 		p2_name_label.text = "Player 2: " + p2_data.name
@@ -140,7 +131,6 @@ func update_ui_display():
 		p2_name_label.text = "Player 2: Waiting..."
 		p2_ready_label.text = ""
 
-	# Update local player's ready button text
 	if players_in_lobby.has(local_player_steam_id):
 		ready_button.text = "Unready" if players_in_lobby[local_player_steam_id].ready else "Ready"
 
@@ -161,8 +151,6 @@ func check_start_game_conditions():
 		else:
 			lobby_title_label.text = "Waiting for players to be ready..."
 
-
-# --- Signal Handlers from SteamManager ---
 func _on_player_joined_lobby(player_steam_id, player_name):
 	print("LobbyScene: Player joined event: " + player_name)
 	add_player_to_lobby_data(player_steam_id, player_name)
@@ -171,12 +159,11 @@ func _on_player_joined_lobby(player_steam_id, player_name):
 func _on_player_left_lobby(player_steam_id):
 	print("LobbyScene: Player left event: " + str(player_steam_id))
 	remove_player_from_lobby_data(player_steam_id)
-	assign_slots_and_refresh_data() # Re-assign slots if necessary and update UI
+	assign_slots_and_refresh_data()
 
 func _on_lobby_metadata_updated():
 	print("LobbyScene: Lobby metadata updated event.")
-	# This could be triggered by ready status changes or game start signal
-	# Re-fetch all relevant data and update UI
+
 	assign_slots_and_refresh_data()
 
 	var game_starting_flag = Steam.getLobbyData(SteamManager.current_lobby_id, "game_starting")
@@ -222,34 +209,26 @@ func _initiate_game_transition():
 	elif local_player_steam_id == player_slots[1]:
 		MatchSetupInfo.local_player_index = 1 # Local player is P2
 	else:
-		# This local player is a spectator or something went wrong
 		printerr("LobbyScene: Local player is not P1 or P2 in the match setup!")
-		MatchSetupInfo.local_player_index = -1 # Indicate spectator or error
-		# For a 1v1, non-spectator game, you might want to prevent transition or handle error
+		MatchSetupInfo.local_player_index = -1
 
 	print("MatchSetupInfo: P1 ID: " + str(MatchSetupInfo.player_steam_ids[0]) +
 		  ", P2 ID: " + str(MatchSetupInfo.player_steam_ids[1]) +
 		  ", Local Player Index: " + str(MatchSetupInfo.local_player_index))
 
-	# TODO: Store selected characters, stage, etc., in MatchSetupInfo if applicable
 
-	# Disable further lobby interactions (optional)
 	ready_button.disabled = true
 	start_game_button.disabled = true
 	leave_lobby_button.disabled = true
 
-	get_tree().change_scene("res://scenes/GameScene.tscn") # Path to your actual game scene
-
-
+	get_tree().change_scene("res://scenes/GameScene.tscn")
 func _on_leave_lobby_button_pressed():
 	if SteamManager.current_lobby_id != null and SteamManager.current_lobby_id != 0:
 		Steam.leaveLobby(SteamManager.current_lobby_id)
-		# SteamManager will get a lobby_chat_update for self, and then current_lobby_id can be cleared.
-		# Or clear it here and let other players get the update.
 
 	players_in_lobby.clear()
 	player_slots = [null, null]
-	SteamManager.current_lobby_id = null # Clear it for the local player
+	SteamManager.current_lobby_id = null
 	get_tree().change_scene_to_file("res://Menu.tscn")
 
 
@@ -258,12 +237,10 @@ func _exit_tree() -> void:
 		print("SteamManager instance is not valid in _exit_tree. Skipping disconnects.")
 		return
 
-	# Create Callables for each method once to avoid repetition
 	var on_player_joined_callable = Callable(self, "_on_player_joined_lobby")
 	var on_player_left_callable = Callable(self, "_on_player_left_lobby")
 	var on_metadata_updated_callable = Callable(self, "_on_lobby_metadata_updated")
 	var on_kicked_callable = Callable(self, "_on_local_player_kicked")
-	# var on_game_start_callable = Callable(self, "_on_game_start_initiated") # If you add this one
 
 	if SteamManager.has_signal("player_joined_lobby"):
 		if SteamManager.player_joined_lobby.is_connected(on_player_joined_callable):
