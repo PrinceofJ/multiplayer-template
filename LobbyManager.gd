@@ -50,6 +50,9 @@ func _ready():
 	print("LobbyScene: Local player Steam ID: " + str(local_player_steam_id))
 	print("LobbyScene: Is host? " + str(is_host))
 
+	if is_host:
+		Steam.setLobbyData(SteamManager.current_lobby_id, "host_id", str(local_player_steam_id))
+
 	initial_lobby_member_scan()
 	update_ui_display()
 
@@ -218,7 +221,9 @@ func _on_ready_button_pressed():
 	#_on_lobby_metadata_updated(SteamManager.current_lobby_id, -1, true)
 
 func _on_start_game_button_pressed():
-	if not is_host: return
+	if not is_host:
+		get_tree().change_scene_to_file("res://GameScene.tscn")
+		return
 	print("LobbyScene: Host clicked Start Game.")
 	Steam.setLobbyData(SteamManager.current_lobby_id, "game_starting", "true")
 
@@ -251,7 +256,7 @@ func _initiate_game_transition():
 	start_game_button.disabled = true
 	leave_lobby_button.disabled = true
 
-	get_tree().change_scene("res://GameScene.tscn")
+	get_tree().change_scene_to_file("res://GameScene.tscn")
 
 func _on_leave_lobby_button_pressed():
 	if SteamManager.current_lobby_id != null and SteamManager.current_lobby_id != 0:
