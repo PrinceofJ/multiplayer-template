@@ -56,6 +56,9 @@ func _ready():
 	initial_lobby_member_scan()
 	update_ui_display()
 
+
+
+
 func initial_lobby_member_scan():
 	if SteamManager.current_lobby_id == null or SteamManager.current_lobby_id == 0: return
 
