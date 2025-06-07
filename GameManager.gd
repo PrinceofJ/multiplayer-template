@@ -7,7 +7,7 @@ func _ready() -> void:
 	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
 	multiplayer.connect("server_disconnected", self._on_server_disconnected)
 
-	multiplayer.connect("connection_succeeded", self._on_connection_success)
+	multiplayer.connect("connected_to_server", self._on_connection_success)
 
 	var localSteamID = MatchSetupInfo.player_steam_ids[MatchSetupInfo.local_player_index]
 	if MatchSetupInfo.local_player_index == 0:
@@ -20,8 +20,6 @@ func _ready() -> void:
 		print("i am a client")
 		var peer = SteamMultiplayerPeer.new()
 		var test = peer.create_client(MatchSetupInfo.player_steam_ids[0], 0) #should always be the host
-		print("DEBUG:" + test)
-		print("DEBUG:" + test==OK)
 		multiplayer.multiplayer_peer = peer
 
 func _on_connection_success():

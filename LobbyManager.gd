@@ -165,7 +165,7 @@ func _on_player_left_lobby(player_steam_id):
 	remove_player_from_lobby_data(player_steam_id)
 	assign_slots_and_refresh_data()
 
-func _on_lobby_metadata_updated(a: int, b: int, c: bool):
+func _on_lobby_metadata_updated(_a: int, _b: int, _c: bool):
 	print("LobbyScene: Lobby metadata updated event.")
 
 	check_for_players()
