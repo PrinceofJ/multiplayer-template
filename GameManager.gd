@@ -19,6 +19,7 @@ func _ready() -> void:
 	else:
 		print("i am a client")
 		var peer = SteamMultiplayerPeer.new()
+		print(MatchSetupInfo.player_steam_ids[0])
 		var test = peer.create_client(MatchSetupInfo.player_steam_ids[0], 0) #should always be the host
 		multiplayer.multiplayer_peer = peer
 
