@@ -14,14 +14,23 @@ func _ready() -> void:
 		print("i am a host")
 
 		var peer = SteamMultiplayerPeer.new()
-		peer.create_host(1)
-		multiplayer.multiplayer_peer = peer
+		var error = peer.create_host(0)
+		if error==OK:
+			multiplayer.multiplayer_peer = peer
+			print("it happened")
+		else:
+			print("DISASTER")
+
 	else:
 		print("i am a client")
 		var peer = SteamMultiplayerPeer.new()
 		print(MatchSetupInfo.player_steam_ids[0])
-		var test = peer.create_client(MatchSetupInfo.player_steam_ids[0], 1) #should always be the host
-		multiplayer.multiplayer_peer = peer
+		var error = peer.create_client(MatchSetupInfo.player_steam_ids[0], 1) #should always be the host
+		if error==OK:
+			multiplayer.multiplayer_peer = peer
+			print("yayayaya")
+		else:
+			print("DISASTER 2")
 
 func _on_connection_success():
 	print("yay!")
