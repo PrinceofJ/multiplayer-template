@@ -13,7 +13,7 @@ func _ready():
 	else:
 		printerr("Failed to initialize Steam.")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	Steam.run_callbacks()
 
 func create_steam_lobby(lobby_type_enum, max_players: int) -> void:
@@ -55,7 +55,7 @@ func _on_game_lobby_join_requested_callback(lobby_id_from_invite, friend_steam_i
 	Steam.joinLobby(int(lobby_id_from_invite))
 
 
-func _on_lobby_entered_callback(lobby_id, permissions, locked, response_code):
+func _on_lobby_entered_callback(lobby_id, _permissions, _locked, response_code):
 	print("SteamManager: Received lobby_entered callback. Lobby ID: " + str(lobby_id) + ", Response Code: " + str(response_code))
 
 	var final_result_code = Steam.RESULT_FAIL
