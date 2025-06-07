@@ -3,8 +3,8 @@ extends Node2D
 @export var TestingLabel: Label
 
 func _ready() -> void:
-	multiplayer.connect("network_peer_connected", self._on_network_peer_connected)
-	multiplayer.connect("network_peer_disconnected", self._on_network_peer_disconnected)
+	multiplayer.connect("peer_connected", self._on_network_peer_connected)
+	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
 	multiplayer.connect("server_disconnected", self._on_server_disconnected)
 
 	var localSteamID = MatchSetupInfo.player_steam_ids[MatchSetupInfo.local_player_index]
@@ -17,7 +17,7 @@ func _ready() -> void:
 	else:
 		print("i am a client")
 		var peer = SteamMultiplayerPeer.new()
-		peer.create_client(MatchSetupInfo.player_steam_ids[0]) #should always be the host
+		peer.create_client(int(MatchSetupInfo.player_steam_ids[0])) #should always be the host
 		multiplayer.multiplayer_peer = peer
 
 func _on_network_peer_connected(peer_id: int):
