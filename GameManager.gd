@@ -8,8 +8,12 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_network_peer_connected)
 	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
 	multiplayer.connect("server_disconnected", self._on_server_disconnected)
-
 	multiplayer.connect("connected_to_server", self._on_connection_success)
+
+	SyncManager.connect("sync_started", self.on_SyncManager_sync_started)
+	SyncManager.connect("sync_stopped", self.on_SyncManager_sync_stopped)
+	SyncManager.connect("sync_lost", self.on_SyncManager_sync_lost)
+	SyncManager.connect("sync_regained", self.on_SyncManager_sync_regained)
 
 	var localSteamID = MatchSetupInfo.player_steam_ids[MatchSetupInfo.local_player_index]
 	if MatchSetupInfo.local_player_index == 0:
@@ -55,3 +59,25 @@ func _on_network_peer_disconnected(peer_id: int):
 func _on_server_disconnected():
 	print("server disconnected")
 	_on_network_peer_disconnected(1)
+
+func _on_SyncManager_sync_started() -> void:
+	print("Sync Started!")
+
+func _on_SyncManager_sync_stopped() -> void:
+	print("sync stopped")
+	pass
+
+func _on_SyncManager_sync_lost() -> void:
+	print("sync lost")
+	pass
+
+func _on_SyncManager_sync_regained() -> void:
+	print("sync regained")
+	pass
+
+func _on_SyncManager_sync_error(msg: String) -> void:
+	print("fatal sync error:", msg)
+	var peer = multiplayer.multiplayer_peer
+	if peer:
+		print("should close connection here")
+	SyncManager.clear_peers()
