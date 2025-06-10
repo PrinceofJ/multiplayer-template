@@ -3,7 +3,8 @@ extends Node2D
 @export var TestingLabel: Label
 
 func _ready() -> void:
-	multiplayer.connect("peer_connected", self._on_network_peer_connected)
+	#get_tree().multiplayer.connect("peer_connected", self._on_network_peer_connected)
+	get_tree().multiplayer.peer_connected.connect(_on_network_peer_connected)
 	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
 	multiplayer.connect("server_disconnected", self._on_server_disconnected)
 
