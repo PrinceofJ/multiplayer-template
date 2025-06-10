@@ -4,6 +4,11 @@ extends Node2D
 
 func _ready() -> void:
 
+	multiplayer.peer_connected.connect(_on_network_peer_connected)
+	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
+	multiplayer.connect("server_disconnected", self._on_server_disconnected)
+	multiplayer.connect("connected_to_server", self._on_connection_success)
+
 	if MatchSetupInfo.local_debug_mode:
 		print("ENTERING LOCAL DEBUG")
 		if MatchSetupInfo.local_player_index == 0:
@@ -14,10 +19,6 @@ func _ready() -> void:
 			return
 
 	#get_tree().multiplayer.connect("peer_connected", self._on_network_peer_connected)
-	multiplayer.peer_connected.connect(_on_network_peer_connected)
-	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
-	multiplayer.connect("server_disconnected", self._on_server_disconnected)
-	multiplayer.connect("connected_to_server", self._on_connection_success)
 
 	SyncManager.connect("sync_started", self.on_SyncManager_sync_started)
 	SyncManager.connect("sync_stopped", self.on_SyncManager_sync_stopped)

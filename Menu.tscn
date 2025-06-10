@@ -43,6 +43,7 @@ offset_right = 1133.0
 offset_bottom = 158.0
 
 [node name="HostLocalButton" type="Button" parent="Panel"]
+layout_mode = 0
 offset_left = 13.0
 offset_top = 20.0
 offset_right = 269.0
@@ -50,6 +51,7 @@ offset_bottom = 60.0
 text = "Host Local (DEBUG)"
 
 [node name="JoinLocalButton" type="Button" parent="Panel"]
+layout_mode = 0
 offset_left = 13.0
 offset_top = 69.0
 offset_right = 270.0
