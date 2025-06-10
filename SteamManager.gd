@@ -58,14 +58,14 @@ func _on_game_lobby_join_requested_callback(lobby_id_from_invite, friend_steam_i
 func _on_lobby_entered_callback(lobby_id, _permissions, _locked, response_code):
 	print("SteamManager: Received lobby_entered callback. Lobby ID: " + str(lobby_id) + ", Response Code: " + str(response_code))
 
-	var final_result_code = Steam.RESULT_FAIL
-	var final_lobby_id = 0
+	var _final_result_code = Steam.RESULT_FAIL
+	var _final_lobby_id = 0
 
 	if response_code == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
 		print("SteamManager: Successfully entered lobby: " + str(lobby_id))
 		current_lobby_id = lobby_id
-		final_result_code = Steam.RESULT_OK
-		final_lobby_id = lobby_id
+		_final_result_code = Steam.RESULT_OK
+		_final_lobby_id = lobby_id
 		var owner_id = Steam.getLobbyOwner(current_lobby_id)
 		print("SteamManager: Lobby owner is " + Steam.getFriendPersonaName(owner_id))
 		Steam.setLobbyData(current_lobby_id, "Players", "HELLO WORLD")

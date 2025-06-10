@@ -4,10 +4,16 @@ extends Control
 @export var join_button: Button
 @export var lobby_id_input: LineEdit
 
+@export var local_host_button: Button
+@export var local_join_button: Button
+
 
 func _ready():
 	create_lobby_button.pressed.connect(_on_create_lobby_button_pressed)
 	join_button.pressed.connect(_on_join_by_id_button_pressed)
+	local_host_button.pressed.connect(_on_local_host_button_pressed)
+	local_join_button.pressed.connect(_on_local_join_button_pressed)
+
 	var on_lobby_created_callable = Callable(self, "_on_steam_lobby_creation_result")
 	if not SteamManager.is_connected("steam_lobby_created", on_lobby_created_callable):
 		SteamManager.steam_lobby_created.connect(on_lobby_created_callable)
@@ -20,6 +26,16 @@ func _ready():
 			create_lobby_button.disabled = false
 			create_lobby_button.text = "Host Game"
 
+
+func _on_local_host_button_pressed():
+	MatchSetupInfo.local_player_index = 0 # Local player is P1
+	MatchSetupInfo.local_debug_mode = true
+	get_tree().change_scene_to_file("res://GameScene.tscn")
+
+func _on_local_join_button_pressed():
+	MatchSetupInfo.local_player_index = 1 # Local player is P2
+	MatchSetupInfo.local_debug_mode = true
+	get_tree().change_scene_to_file("res://GameScene.tscn")
 
 func _on_create_lobby_button_pressed():
 	if create_lobby_button:

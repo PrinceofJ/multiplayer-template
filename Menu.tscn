@@ -2,13 +2,15 @@
 
 [ext_resource type="Script" uid="uid://d2kkvk0dvlrwc" path="res://MultiplayerMenu.gd" id="1_uubjt"]
 
-[node name="MenuScene" type="Control" node_paths=PackedStringArray("create_lobby_button", "join_button", "lobby_id_input")]
+[node name="MenuScene" type="Control" node_paths=PackedStringArray("create_lobby_button", "join_button", "lobby_id_input", "local_host_button", "local_join_button")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_uubjt")
 create_lobby_button = NodePath("CreateLobbyButton")
 join_button = NodePath("JoinButton")
 lobby_id_input = NodePath("LobbyIDInput")
+local_host_button = NodePath("Panel/HostLocalButton")
+local_join_button = NodePath("Panel/JoinLocalButton")
 
 [node name="CreateLobbyButton" type="Button" parent="."]
 layout_mode = 0
@@ -32,3 +34,24 @@ offset_top = 174.0
 offset_right = 203.0
 offset_bottom = 214.0
 text = "JOIN BY ID"
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 850.0
+offset_top = 26.0
+offset_right = 1133.0
+offset_bottom = 158.0
+
+[node name="HostLocalButton" type="Button" parent="Panel"]
+offset_left = 13.0
+offset_top = 20.0
+offset_right = 269.0
+offset_bottom = 60.0
+text = "Host Local (DEBUG)"
+
+[node name="JoinLocalButton" type="Button" parent="Panel"]
+offset_left = 13.0
+offset_top = 69.0
+offset_right = 270.0
+offset_bottom = 109.0
+text = "Join Local (DEBUG)"

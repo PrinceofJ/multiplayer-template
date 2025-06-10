@@ -4,6 +4,15 @@ extends Node2D
 
 func _ready() -> void:
 
+	if MatchSetupInfo.local_debug_mode:
+		print("ENTERING LOCAL DEBUG")
+		if MatchSetupInfo.local_player_index == 0:
+			setup_local_debug_host()
+			return
+		elif MatchSetupInfo.local_player_index == 1:
+			setup_local_debug_client()
+			return
+
 	#get_tree().multiplayer.connect("peer_connected", self._on_network_peer_connected)
 	multiplayer.peer_connected.connect(_on_network_peer_connected)
 	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
@@ -15,7 +24,7 @@ func _ready() -> void:
 	SyncManager.connect("sync_lost", self.on_SyncManager_sync_lost)
 	SyncManager.connect("sync_regained", self.on_SyncManager_sync_regained)
 
-	var localSteamID = MatchSetupInfo.player_steam_ids[MatchSetupInfo.local_player_index]
+	var _localSteamID = MatchSetupInfo.player_steam_ids[MatchSetupInfo.local_player_index]
 	if MatchSetupInfo.local_player_index == 0:
 		print("i am a host")
 
@@ -81,3 +90,18 @@ func _on_SyncManager_sync_error(msg: String) -> void:
 	if peer:
 		print("should close connection here")
 	SyncManager.clear_peers()
+
+
+func setup_local_debug_host():
+	print("debug mode local host")
+	var peer = ENetMultiplayerPeer.new()
+	TestingLabel.text = "listening"
+	peer.create_server(9999, 1)
+	multiplayer.multiplayer_peer = peer
+
+func setup_local_debug_client():
+	print("debug mode local client")
+	var peer = ENetMultiplayerPeer.new()
+	TestingLabel.text = "joining"
+	peer.create_client("127.0.0.1", 9999)
+	multiplayer.multiplayer_peer = peer
