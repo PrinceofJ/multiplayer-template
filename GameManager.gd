@@ -69,18 +69,18 @@ func _on_server_disconnected():
 	print("server disconnected")
 	_on_network_peer_disconnected(1)
 
-func _on_SyncManager_sync_started() -> void:
+func on_SyncManager_sync_started() -> void:
 	print("Sync Started!")
 
-func _on_SyncManager_sync_stopped() -> void:
+func on_SyncManager_sync_stopped() -> void:
 	print("sync stopped")
 	pass
 
-func _on_SyncManager_sync_lost() -> void:
+func on_SyncManager_sync_lost() -> void:
 	print("sync lost")
 	pass
 
-func _on_SyncManager_sync_regained() -> void:
+func on_SyncManager_sync_regained() -> void:
 	print("sync regained")
 	pass
 
