@@ -8,6 +8,11 @@ func _ready() -> void:
 	multiplayer.connect("peer_disconnected", self._on_network_peer_disconnected)
 	multiplayer.connect("server_disconnected", self._on_server_disconnected)
 	multiplayer.connect("connected_to_server", self._on_connection_success)
+	SyncManager.connect("sync_started", self.on_SyncManager_sync_started)
+	SyncManager.connect("sync_stopped", self.on_SyncManager_sync_stopped)
+	SyncManager.connect("sync_lost", self.on_SyncManager_sync_lost)
+	SyncManager.connect("sync_regained", self.on_SyncManager_sync_regained)
+	SyncManager.connect("sync_error", self._on_SyncManager_sync_error)
 
 	if MatchSetupInfo.local_debug_mode:
 		print("ENTERING LOCAL DEBUG")
@@ -20,10 +25,7 @@ func _ready() -> void:
 
 	#get_tree().multiplayer.connect("peer_connected", self._on_network_peer_connected)
 
-	SyncManager.connect("sync_started", self.on_SyncManager_sync_started)
-	SyncManager.connect("sync_stopped", self.on_SyncManager_sync_stopped)
-	SyncManager.connect("sync_lost", self.on_SyncManager_sync_lost)
-	SyncManager.connect("sync_regained", self.on_SyncManager_sync_regained)
+
 
 	var _localSteamID = MatchSetupInfo.player_steam_ids[MatchSetupInfo.local_player_index]
 	if MatchSetupInfo.local_player_index == 0:
@@ -54,6 +56,13 @@ func _on_connection_success():
 func _on_network_peer_connected(peer_id: int):
 	TestingLabel.text = "connected"
 	SyncManager.add_peer(peer_id)
+
+	$ServerPlayer.set_multiplayer_authority(1)
+	if multiplayer.is_server():
+		$ClientPlayer.set_multiplayer_authority(peer_id)
+	else:
+		$ClientPlayer.set_multiplayer_authority(multiplayer.get_unique_id())
+
 	print("connected")
 	if multiplayer.is_server():
 		TestingLabel.text = "Starting"

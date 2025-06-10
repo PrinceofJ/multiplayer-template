@@ -30,6 +30,10 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/godot-rollback-netcode/plugin.cfg")
 
+[global_group]
+
+network_sync=""
+
 [input]
 
 sync_debug={
