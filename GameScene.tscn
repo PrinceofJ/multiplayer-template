@@ -4,8 +4,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_eqhe0"]
 
-[node name="GameScene" type="Node2D"]
+[node name="GameScene" type="Node2D" node_paths=PackedStringArray("TestingLabel")]
 script = ExtResource("1_eqhe0")
+TestingLabel = NodePath("TestingLabel")
 
 [node name="TestingLabel" type="Label" parent="."]
 offset_left = 441.0
