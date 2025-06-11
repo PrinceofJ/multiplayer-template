@@ -17,9 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SteamManager="*res://SteamManager.gd"
+SteamManager="*res://Scripts/SteamManager.gd"
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
-MatchSetupInfo="*res://MatchSetupInfo.gd"
+MatchSetupInfo="*res://Scripts/MatchSetupInfo.gd"
 
 [editor]
 

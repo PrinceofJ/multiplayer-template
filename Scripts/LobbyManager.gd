@@ -20,7 +20,7 @@ var local_player_ready_state = false
 func _ready():
 	if SteamManager.current_lobby_id == null or SteamManager.current_lobby_id == 0:
 		printerr("LobbyScene: No valid lobby ID found. Returning to main menu.")
-		get_tree().change_scene_to_file("res://Menu.tscn")
+		get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
 		return
 
 	local_player_steam_id = Steam.getSteamID()
@@ -225,7 +225,7 @@ func _on_ready_button_pressed():
 
 func _on_start_game_button_pressed():
 	if not is_host:
-		get_tree().change_scene_to_file("res://GameScene.tscn")
+		get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")
 		return
 	print("LobbyScene: Host clicked Start Game.")
 	Steam.setLobbyData(SteamManager.current_lobby_id, "game_starting", "true")
@@ -259,7 +259,7 @@ func _initiate_game_transition():
 	start_game_button.disabled = true
 	leave_lobby_button.disabled = true
 
-	get_tree().change_scene_to_file("res://GameScene.tscn")
+	get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")
 
 func _on_leave_lobby_button_pressed():
 	if SteamManager.current_lobby_id != null and SteamManager.current_lobby_id != 0:
@@ -268,7 +268,7 @@ func _on_leave_lobby_button_pressed():
 	players_in_lobby.clear()
 	player_slots = [null, null]
 	SteamManager.current_lobby_id = null
-	get_tree().change_scene_to_file("res://Menu.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
 
 
 func _exit_tree() -> void:

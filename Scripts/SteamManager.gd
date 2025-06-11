@@ -70,7 +70,7 @@ func _on_lobby_entered_callback(lobby_id, _permissions, _locked, response_code):
 		print("SteamManager: Lobby owner is " + Steam.getFriendPersonaName(owner_id))
 		Steam.setLobbyData(current_lobby_id, "Players", "HELLO WORLD")
 
-		get_tree().change_scene_to_file("res://lobby.tscn")
+		get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
 	else:
 		printerr("SteamManager: Failed to enter lobby. Steam Response code: " + str(response_code))
 		current_lobby_id = null

@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://beldci8uw0sol"]
 
-[ext_resource type="Script" uid="uid://d2kkvk0dvlrwc" path="res://MultiplayerMenu.gd" id="1_uubjt"]
+[ext_resource type="Script" uid="uid://d2kkvk0dvlrwc" path="res://Scripts/MultiplayerMenu.gd" id="1_3kf3n"]
 
 [node name="MenuScene" type="Control" node_paths=PackedStringArray("create_lobby_button", "join_button", "lobby_id_input", "local_host_button", "local_join_button")]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_uubjt")
+script = ExtResource("1_3kf3n")
 create_lobby_button = NodePath("CreateLobbyButton")
 join_button = NodePath("JoinButton")
 lobby_id_input = NodePath("LobbyIDInput")

@@ -30,12 +30,12 @@ func _ready():
 func _on_local_host_button_pressed():
 	MatchSetupInfo.local_player_index = 0 # Local player is P1
 	MatchSetupInfo.local_debug_mode = true
-	get_tree().change_scene_to_file("res://GameScene.tscn")
+	get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")
 
 func _on_local_join_button_pressed():
 	MatchSetupInfo.local_player_index = 1 # Local player is P2
 	MatchSetupInfo.local_debug_mode = true
-	get_tree().change_scene_to_file("res://GameScene.tscn")
+	get_tree().change_scene_to_file("res://Scenes/GameScene.tscn")
 
 func _on_create_lobby_button_pressed():
 	if create_lobby_button:
@@ -52,7 +52,7 @@ func _on_create_lobby_button_pressed():
 func _on_steam_lobby_creation_result(result_code, lobby_id):
 	if result_code == Steam.RESULT_OK:
 		print("MainMenuScene: Successfully created lobby! Lobby ID:", lobby_id, ". Transitioning...")
-		get_tree().change_scene_to_file("res://lobby.tscn")
+		get_tree().change_scene_to_file("res://Scenes/lobby.tscn")
 	else:
 		printerr("MainMenuScene: Failed to create lobby. Error code:", result_code)
 		if create_lobby_button:
