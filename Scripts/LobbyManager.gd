@@ -25,16 +25,7 @@ func _ready():
 
 	local_player_steam_id = Steam.getSteamID()
 	is_host = (Steam.getLobbyOwner(SteamManager.current_lobby_id) == local_player_steam_id)
-
-	# TODO make this work
-
-	#if SteamManager.has_signal("player_left_lobby"):
-	#	SteamManager.player_left_lobby.connect(Callable(self, "_on_player_left_lobby"))
-
 	Steam.connect("lobby_data_update", self._on_lobby_metadata_updated)
-
-	#if SteamManager.has_signal("local_player_kicked_from_lobby"):
-	#	SteamManager.local_player_kicked_from_lobby.connect(Callable(self, "_on_local_player_kicked"))
 
 	if ready_button:
 		ready_button.pressed.connect(Callable(self, "_on_ready_button_pressed"))
@@ -203,7 +194,6 @@ func check_for_players():
 				print("Removing Player " + players_in_lobby.keys()[i])
 				players_in_lobby[players_in_lobby.keys()[i]] = null;
 		assign_slots_and_refresh_data()
-
 
 
 

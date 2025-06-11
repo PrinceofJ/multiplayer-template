@@ -74,5 +74,3 @@ func _on_lobby_entered_callback(lobby_id, _permissions, _locked, response_code):
 	else:
 		printerr("SteamManager: Failed to enter lobby. Steam Response code: " + str(response_code))
 		current_lobby_id = null
-
-	#emit_signal("steam_lobby_joined", final_result_code, final_lobby_id)
