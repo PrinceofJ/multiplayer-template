@@ -8,15 +8,13 @@ font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_r5v3i"]
 
-[node name="LobbyScene" type="Control" node_paths=PackedStringArray("lobby_title_label", "p1_name_label", "p1_ready_label", "p2_name_label", "p2_ready_label", "ready_button", "start_game_button", "leave_lobby_button")]
+[node name="LobbyScene" type="Control" node_paths=PackedStringArray("lobby_title_label", "player_name_labels", "player_ready_labels", "ready_button", "start_game_button", "leave_lobby_button")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_ll2xe")
 lobby_title_label = NodePath("Background/MainLayout/LobbyTitle")
-p1_name_label = NodePath("Background/MainLayout/Player1Slot/Player1Name")
-p1_ready_label = NodePath("Background/MainLayout/Player1Slot/Player1Status")
-p2_name_label = NodePath("Background/MainLayout/Player2Slot/Player2Name")
-p2_ready_label = NodePath("Background/MainLayout/Player2Slot/Player2Status")
+player_name_labels = [NodePath("Background/MainLayout/PlayersGrid/Player1Slot/Player1Name"), NodePath("Background/MainLayout/PlayersGrid/Player2Slot/Player2Name"), NodePath("Background/MainLayout/PlayersGrid/Player3Slot/Player3Name"), NodePath("Background/MainLayout/PlayersGrid/Player4Slot/Player4Name")]
+player_ready_labels = [NodePath("Background/MainLayout/PlayersGrid/Player1Slot/Player1Status"), NodePath("Background/MainLayout/PlayersGrid/Player2Slot/Player2Status"), NodePath("Background/MainLayout/PlayersGrid/Player3Slot/Player3Status"), NodePath("Background/MainLayout/PlayersGrid/Player4Slot/Player4Status")]
 ready_button = NodePath("Background/MainLayout/ReadyButton")
 start_game_button = NodePath("Background/MainLayout/StartButton")
 leave_lobby_button = NodePath("Background/MainLayout/LeaveButton")
@@ -42,42 +40,83 @@ text = "Game Lobby, waiting for players"
 label_settings = SubResource("LabelSettings_r5v3i")
 horizontal_alignment = 1
 
-[node name="Player1Slot" type="PanelContainer" parent="Background/MainLayout"]
+[node name="PlayersGrid" type="HBoxContainer" parent="Background/MainLayout"]
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 3
+theme_override_constants/separation = 10
 
-[node name="Player1Name" type="Label" parent="Background/MainLayout/Player1Slot"]
+[node name="Player1Slot" type="PanelContainer" parent="Background/MainLayout/PlayersGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player1Name" type="Label" parent="Background/MainLayout/PlayersGrid/Player1Slot"]
 layout_mode = 2
 text = "Player 1: Waiting"
 
-[node name="Player1Avatar" type="TextureRect" parent="Background/MainLayout/Player1Slot"]
+[node name="Player1Avatar" type="TextureRect" parent="Background/MainLayout/PlayersGrid/Player1Slot"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = SubResource("PlaceholderTexture2D_r5v3i")
 
-[node name="Player1Status" type="Label" parent="Background/MainLayout/Player1Slot"]
+[node name="Player1Status" type="Label" parent="Background/MainLayout/PlayersGrid/Player1Slot"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Not Ready"
 
-[node name="Player2Slot" type="PanelContainer" parent="Background/MainLayout"]
+[node name="Player2Slot" type="PanelContainer" parent="Background/MainLayout/PlayersGrid"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
+size_flags_horizontal = 3
 
-[node name="Player2Name" type="Label" parent="Background/MainLayout/Player2Slot"]
+[node name="Player2Name" type="Label" parent="Background/MainLayout/PlayersGrid/Player2Slot"]
 layout_mode = 2
 text = "Player 2: Waiting"
 
-[node name="Player2Avatar" type="TextureRect" parent="Background/MainLayout/Player2Slot"]
+[node name="Player2Avatar" type="TextureRect" parent="Background/MainLayout/PlayersGrid/Player2Slot"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 texture = SubResource("PlaceholderTexture2D_r5v3i")
 
-[node name="Player2Status" type="Label" parent="Background/MainLayout/Player2Slot"]
+[node name="Player2Status" type="Label" parent="Background/MainLayout/PlayersGrid/Player2Slot"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Not Ready"
+
+[node name="Player3Slot" type="PanelContainer" parent="Background/MainLayout/PlayersGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player3Name" type="Label" parent="Background/MainLayout/PlayersGrid/Player3Slot"]
+layout_mode = 2
+text = "Player 3: Waiting"
+
+[node name="Player3Avatar" type="TextureRect" parent="Background/MainLayout/PlayersGrid/Player3Slot"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("PlaceholderTexture2D_r5v3i")
+
+[node name="Player3Status" type="Label" parent="Background/MainLayout/PlayersGrid/Player3Slot"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Not Ready"
+
+[node name="Player4Slot" type="PanelContainer" parent="Background/MainLayout/PlayersGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player4Name" type="Label" parent="Background/MainLayout/PlayersGrid/Player4Slot"]
+layout_mode = 2
+text = "Player 4: Waiting"
+
+[node name="Player4Avatar" type="TextureRect" parent="Background/MainLayout/PlayersGrid/Player4Slot"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = SubResource("PlaceholderTexture2D_r5v3i")
+
+[node name="Player4Status" type="Label" parent="Background/MainLayout/PlayersGrid/Player4Slot"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Not Ready"
@@ -95,5 +134,4 @@ text = "Start"
 [node name="LeaveButton" type="Button" parent="Background/MainLayout"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Leave
-"
+text = "Leave"

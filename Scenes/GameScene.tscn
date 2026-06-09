@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0o3wb44fhnfd"]
+[gd_scene load_steps=3 format=3 uid="uid://b0o3wb44fhnfd"]
 
 [ext_resource type="Script" uid="uid://blmy3yawj7lwx" path="res://Scripts/GameManager.gd" id="1_4bvgx"]
-[ext_resource type="PackedScene" uid="uid://4xxyu0dq2qy8" path="res://Scenes/player.tscn" id="2_3mbwn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_eqhe0"]
 
@@ -18,8 +17,8 @@ text = "default text"
 label_settings = SubResource("LabelSettings_eqhe0")
 horizontal_alignment = 1
 
-[node name="ServerPlayer" parent="." instance=ExtResource("2_3mbwn")]
-position = Vector2(298, 293)
+[node name="Players" type="Node2D" parent="."]
 
-[node name="ClientPlayer" parent="." instance=ExtResource("2_3mbwn")]
-position = Vector2(836, 292)
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
+spawn_path = NodePath("../Players")

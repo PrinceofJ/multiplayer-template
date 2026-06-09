@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://beldci8uw0sol"]
+[gd_scene format=3 uid="uid://beldci8uw0sol"]
 
 [ext_resource type="Script" uid="uid://d2kkvk0dvlrwc" path="res://Scripts/MultiplayerMenu.gd" id="1_3kf3n"]
 
-[node name="MenuScene" type="Control" node_paths=PackedStringArray("create_lobby_button", "join_button", "lobby_id_input", "local_host_button", "local_join_button")]
+[node name="MenuScene" type="Control" unique_id=970641119 node_paths=PackedStringArray("create_lobby_button", "join_button", "lobby_id_input", "local_host_button", "local_join_button")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_3kf3n")
@@ -12,7 +12,7 @@ lobby_id_input = NodePath("LobbyIDInput")
 local_host_button = NodePath("Panel/HostLocalButton")
 local_join_button = NodePath("Panel/JoinLocalButton")
 
-[node name="CreateLobbyButton" type="Button" parent="."]
+[node name="CreateLobbyButton" type="Button" parent="." unique_id=2039990676]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 26.0
@@ -20,14 +20,14 @@ offset_right = 203.0
 offset_bottom = 70.0
 text = "CREATE LOBBY"
 
-[node name="LobbyIDInput" type="LineEdit" parent="."]
+[node name="LobbyIDInput" type="LineEdit" parent="." unique_id=2016705058]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 134.0
 offset_right = 256.0
 offset_bottom = 167.0
 
-[node name="JoinButton" type="Button" parent="."]
+[node name="JoinButton" type="Button" parent="." unique_id=1407397880]
 layout_mode = 0
 offset_left = 26.0
 offset_top = 174.0
@@ -35,14 +35,14 @@ offset_right = 203.0
 offset_bottom = 214.0
 text = "JOIN BY ID"
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=24262072]
 layout_mode = 0
 offset_left = 850.0
 offset_top = 26.0
 offset_right = 1133.0
 offset_bottom = 158.0
 
-[node name="HostLocalButton" type="Button" parent="Panel"]
+[node name="HostLocalButton" type="Button" parent="Panel" unique_id=434940411]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 20.0
@@ -50,7 +50,7 @@ offset_right = 269.0
 offset_bottom = 60.0
 text = "Host Local (DEBUG)"
 
-[node name="JoinLocalButton" type="Button" parent="Panel"]
+[node name="JoinLocalButton" type="Button" parent="Panel" unique_id=601279704]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 69.0
